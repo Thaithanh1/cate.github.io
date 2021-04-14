@@ -8,13 +8,13 @@ if($con){
 	echo "no connection";
 }
 
-$db = mysqli_select_db($con, 'dcg72tr1l83dd3');
+$db = pg_select_db($con, 'dcg72tr1l83dd3');
 
 if(isset($_POST['loginSubmit'])){
 	$username=$_POST['name'];
 	$password=$_POST['pass'];
 
-	$sql="select * from account where username='$username'
+	$sql="select * from account where user_name='$username'
 	 and password='$password'";
 	 $query= pg_query($con, $sql);
 
