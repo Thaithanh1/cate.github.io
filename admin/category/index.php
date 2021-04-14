@@ -65,7 +65,7 @@ require_once('../../common/utility.php');
 	</thead>
 	<tbody>
 		<?php
-            		$query = pg_query($conn, "SELECT * FROM category");
+            		$query = pg_query($con, "SELECT * FROM category");
             		while ($item = pg_fetch_array($query)){ 
         	?>
 			
