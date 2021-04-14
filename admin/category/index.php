@@ -66,28 +66,10 @@ require_once('../../common/utility.php');
 	<tbody>
 		<?php
 		//lay danh sach danh muc tu database
-		$limit = 10;
-		$page = 1;
-		if (isset($_GET['page'])) {
-			$page = $_GET['page'];
-		}
-		if ($page <= 0) {
-			$page = 1;
-		}
-		$firstIndex = ($page-1)*$limit;
-		$s= '';
-		if (isset($_GET['s'])) {
-			$s = $_GET['s'];
-		}
-		//trang can lay san pham, so phan tu tren mot trang: $limit
-		$additional = '';
-
-		if (!empty($s)) {
-			$additional = 'and cat_name like "%'.$s.'%" ';
-		}
-		$sql = 'select * from category where 1 '.$additional.' limit '.$firstIndex.','.$limit;
+		
+		$sql = 'select * from category ';
 		$categoryList = executeResult($sql);
-		$sql = 'select count(cat_name) as total from category where 1 '.$additional;
+		$sql = 'select count(cat_name) as total from category ';
 		$countResult = executeSingleResult($sql);
 		$number = 0;
 		if ($countResult != null){
@@ -97,7 +79,6 @@ require_once('../../common/utility.php');
 		foreach ($categoryList as $item){
 			echo '
 				<tr>
-					<td>'.(++$firstIndex).'</td>
 					<td>'.$item['cat_name'].'</td>
 					<td>'.$item['descripition'].'</td>
 					<td>
@@ -112,8 +93,7 @@ require_once('../../common/utility.php');
 
 	</tbody>
 </table>
-			<!--Bai toan phan trang-->
-			<?=pagination($number, $page, '&s'.$s)?>
+			
 			</div>
 		</div>
 	</div>
