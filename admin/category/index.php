@@ -65,32 +65,23 @@ require_once('../../common/utility.php');
 	</thead>
 	<tbody>
 		<?php
-		//lay danh sach danh muc tu database
-		
-		$sql = 'select * from category ';
-		$categoryList = executeResult($sql);
-		$sql = 'select count(cat_name) as total from category ';
-		$countResult = executeSingleResult($sql);
-		$number = 0;
-		if ($countResult != null){
-			$count = $countResult['total'];
-			$number = ceil($count/$limit);
-		}
-		foreach ($categoryList as $item){
-			echo '
+            		$query = pg_query($conn, "SELECT * FROM category");
+            		while ($item = pg_fetch_array($query)){ 
+        	?>
+			
 				<tr>
 					<td>'.$item['cat_name'].'</td>
 					<td>'.$item['descripition'].'</td>
 					<td>
-						<a href="add.php?id='.$item['cat_name'].'"><buttom class="btn btn-warning">Repair</buttom></a>
+						<a href="add.php?name='.$item['cat_name'].'"><buttom class="btn btn-warning">Repair</buttom></a>
 					</td>
 					<td>
 						<buttom class="btn btn-danger" onclick="deleteCategory('.$item['cat_name'].')">Delete</buttom>
 					</td>
-				</tr>';
-		}
-		?>
-
+				</tr>;
+		
+		
+		<?php } ?>     
 	</tbody>
 </table>
 			
@@ -98,12 +89,12 @@ require_once('../../common/utility.php');
 		</div>
 	</div>
 	<script type="text/javascript">
-		function deleteProduct(id){
+		function deleteProduct(name){
 			var option = confirm('Do you want to delete this CATEGORY ???')
 			if (!option) {
 				return;
 			}
-			console.log(id)
+			console.log(name)
 			//ajax - lenh post
 			$.post('ajax.php', {
 				'name': cat_name,
